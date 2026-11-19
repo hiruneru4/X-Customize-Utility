@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "X Customize Utility",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Xの数値詳細表示・シャドウバン/センシティブ判定・表示カスタマイズ・各種ショートカットを追加します。",
   "permissions": [
     "storage",
