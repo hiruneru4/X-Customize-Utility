@@ -1,0 +1,135 @@
+:root { --bg:#fff; --fg:#0f1419; --sub:#536471; --line:#cfd9de; --accent:#1d9bf0; }
+html[data-theme="dark"] { --bg:#000; --fg:#e7e9ea; --sub:#71767b; --line:#2f3336; }
+body { width: 460px; max-width: 100%; margin: 0; padding: 12px 14px 16px; overflow-x: hidden; box-sizing: border-box; background: var(--bg); color: var(--fg); font: 13px/1.5 system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Yu Gothic UI", sans-serif; }
+body.dock { width: 100%; height: 100vh; overflow-y: auto; overflow-x: hidden; }
+h1 { margin: 0; font-size: 16px; }
+header .top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 6px 0 2px; }
+.note { margin: 2px 0 8px; color: var(--sub); font-size: 11px; }
+details { border-top: 1px solid var(--line); padding: 4px 0; }
+summary { cursor: pointer; font-weight: 700; padding: 4px 0; }
+.grp { padding: 2px 0 6px 2px; }
+.sub { color: var(--sub); font-size: 11px; margin-top: 4px; }
+label { display: flex; align-items: center; gap: 8px; padding: 2px 0; cursor: pointer; }
+label.sel { justify-content: space-between; }
+label.file { flex-direction: column; align-items: flex-start; gap: 2px; }
+input[type=checkbox] { accent-color: var(--accent); }
+input[type=color] { width: 26px; height: 20px; padding: 0; border: 1px solid var(--line); border-radius: 4px; background: transparent; }
+select { padding: 2px 6px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg); font: inherit; }
+.row { display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 2px 0; }
+/* 四角い選択ボタン */
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.seg button { padding: 3px 9px; border: 0; border-right: 1px solid var(--line); background: transparent; color: var(--fg); font: inherit; font-size: 12px; cursor: pointer; }
+.seg button:last-child { border-right: 0; }
+.seg button.on { background: var(--accent); color: #fff; }
+.btn { padding: 4px 10px; border: 1px solid var(--line); border-radius: 6px; background: transparent; color: var(--fg); font: inherit; cursor: pointer; }
+.btn:hover { background: rgba(128,128,128,.15); }
+.btn.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.diag { margin-top: 6px; color: var(--sub); font-size: 11px; word-break: break-all; }
+.top-diag { margin: 4px 0 6px; padding: 4px 8px; border: 1px solid var(--line, #cfd9de); border-radius: 8px; font-size: 11px; line-height: 1.5; word-break: break-all; }
+.row > span { min-width: 0; }
+.row { flex-wrap: wrap; }
+.seg { flex-wrap: wrap; max-width: 100%; }
+.seg button { white-space: nowrap; padding: 3px 8px; }
+.help p { margin: 6px 0; font-size: 12px; line-height: 1.6; }
+body.dock #pin { display: none; }
+
+#snText, .bigtext { width: 100%; box-sizing: border-box; margin: 6px 0 4px; padding: 6px 8px; border: 1px solid var(--line, #cfd9de); border-radius: 8px; background: transparent; color: inherit; font: inherit; font-size: 13px; resize: vertical; }
+.snl { display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
+.snr { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 4px 6px; border: 1px solid var(--line, #cfd9de); border-radius: 8px; font-size: 12px; }
+.snr span { flex: 1; min-width: 0; white-space: pre-wrap; overflow-wrap: anywhere; max-height: 4.5em; overflow: hidden; }
+
+details.inner { margin-top: 8px; border-top: 1px dashed var(--line, #cfd9de); }
+#hlText { width: 100%; box-sizing: border-box; margin: 6px 0 4px; padding: 6px 8px; border: 1px solid var(--line, #cfd9de); border-radius: 8px; background: transparent; color: inherit; font: inherit; font-size: 13px; resize: vertical; }
+
+.uthrow { margin: 6px 0; padding: 6px 8px; border: 1px solid var(--line, #cfd9de); border-radius: 8px; font-size: 12px; }
+.uthrow span { opacity: .65; }
+.uthrow p { margin: 3px 0 0; line-height: 1.5; }
+.uthnote { margin: 8px 0 0; font-size: 11px; opacity: .75; line-height: 1.5; }
+
+.uthmeta { margin: 2px 0; font-size: 12px; }
+
+.snl { overflow-y: auto; scrollbar-width: thin; }
+details.subd { margin: 4px 0; }
+details.subd > summary.sub { cursor: pointer; margin: 2px 0; }
+
+.uthcap { margin: 6px 0 2px; font-size: 11px; opacity: .75; }
+.uthidlist { display: flex; flex-direction: column; max-height: 122px; overflow-y: auto; scrollbar-width: thin; border: 1px solid var(--line, #cfd9de); border-radius: 6px; }
+.uthid { display: block; flex: none; height: 20px; padding: 0 8px; font: 12px/20px ui-monospace, Menlo, Consolas, monospace; color: #1d9bf0; text-decoration: none; }
+.uthid:hover { background: rgba(128,128,128,.18); text-decoration: underline; }
+
+/* ===== タブ ===== */
+nav.tabs { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 4px; margin: 6px 0 8px; padding: 4px 0; background: var(--bg); width: 100%; box-sizing: border-box; max-width: 100%; }
+.tabb { padding: 5px 10px; border: 1px solid var(--line, #cfd9de); border-radius: 8px; background: transparent; color: var(--fg); font: inherit; font-size: 13px; cursor: pointer; }
+.tabb.on { background: #1d9bf0; border-color: #1d9bf0; color: #fff; }
+.tabp { display: none; }
+.tabp.on { display: block; }
+input.key { width: 100%; box-sizing: border-box; margin: 2px 0 6px; padding: 5px 8px; border: 1px solid var(--line, #cfd9de); border-radius: 8px; background: transparent; color: inherit; font: inherit; font-size: 12px; }
+.uthnums { margin-top: 6px; font-size: 12px; }
+.uthnum { font: 11px/1.6 ui-monospace, Menlo, Consolas, monospace; opacity: .85; word-break: break-all; }
+
+#sensBox { white-space: pre-line; line-height: 1.6; }
+.sensrow { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; padding: 4px 6px; border: 1px solid var(--line, #cfd9de); border-radius: 8px; font-size: 11px; }
+.sensrow .senst { font-weight: 700; }
+.sensrow a { color: #1d9bf0; text-decoration: none; word-break: break-all; font-family: ui-monospace, Menlo, Consolas, monospace; }
+.sensrow .sensleft { flex-basis: 100%; opacity: .75; }
+.uthid .uthdate { float: right; opacity: .6; font: 10px/20px system-ui, sans-serif; color: inherit; }
+.uthofficial { margin-top: 6px; font-size: 11px; }
+.uthofficial p { margin: 3px 0; line-height: 1.5; opacity: .85; }
+
+/* ===== 定型文・強調の行内編集 ===== */
+.snr .snedit { flex: 1; min-width: 0; padding: 4px 6px; border: 1px solid transparent; border-radius: 6px; background: transparent; color: inherit; font: inherit; font-size: 12px; }
+.snr .snedit:hover, .snr .snedit:focus { border-color: var(--line); background: var(--bg); outline: none; }
+.snr .snx { padding: 2px 8px; opacity: 0; color: var(--sub); }
+.snr:hover .snx, .snr:focus-within .snx { opacity: 1; }
+.snr .snx:hover { background: rgba(244,33,46,.15); color: #f4212e; }
+
+/* ===== 統計・情報(グラフ) ===== */
+#statAcct { flex: 1; min-width: 0; }
+.statchart { margin: 6px 0; }
+.stathead { font-size: 12px; margin-bottom: 4px; }
+.statsvg { width: 100%; height: 150px; border: 1px solid var(--line); border-radius: 8px; background: rgba(128,128,128,.05); }
+.statnums { display: flex; flex-direction: column; gap: 2px; max-height: 180px; overflow-y: auto; border: 1px solid var(--line); border-radius: 8px; padding: 4px 6px; }
+.statrow { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; }
+.statrow span { opacity: .7; }
+.statempty { padding: 12px; font-size: 12px; opacity: .7; border: 1px dashed var(--line); border-radius: 8px; }
+.stataxis { display: flex; justify-content: space-between; font-size: 10px; opacity: .6; margin-top: 2px; }
+#statDel { flex: none; padding: 3px 8px; }
+.sensgroup { font-size: 11px; font-weight: 700; margin: 6px 0 2px; padding: 2px 6px; border-radius: 6px; background: rgba(29,155,240,.14); color: #1d9bf0; }
+
+/* ===== センシティブ手動追加の行 ===== */
+.xdt-snadd { display: flex; gap: 4px; }
+.xdt-snadd input { flex: 1; min-width: 0; padding: 5px 8px; border: 1px solid var(--line); border-radius: 8px; background: transparent; color: inherit; font: inherit; font-size: 12px; }
+
+/* ===== 左サイドメニューの並べ替え・非表示エディタ ===== */
+#navEditor { display: flex; flex-direction: column; gap: 3px; margin-top: 4px; }
+.navrow { display: flex; align-items: center; gap: 6px; padding: 2px 4px; border: 1px solid var(--line); border-radius: 8px; }
+.navrow .navmv { padding: 1px 7px; line-height: 1.4; }
+.navrow .navmv:disabled { opacity: .35; cursor: default; }
+.navrow .navlab { flex: 1; min-width: 0; font-size: 12px; }
+.navrow .navhid { flex: none; gap: 4px; font-size: 11px; color: var(--sub); }
+
+/* ===== お気に入り(☆) ===== */
+.favlist { display: flex; flex-direction: column; gap: 4px; margin-top: 4px; max-height: 420px; overflow-y: auto; scrollbar-width: thin; }
+.favrow { display: flex; align-items: center; gap: 8px; padding: 4px 6px; border: 1px solid var(--line); border-radius: 8px; }
+.favav { flex: none; width: 32px; height: 32px; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; background: rgba(128,128,128,.15); font-size: 16px; }
+.favav img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.favinfo { flex: 1; min-width: 0; }
+.favdn { font-size: 12px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.favid { font-size: 11px; color: var(--sub); font-family: ui-monospace, Menlo, Consolas, monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.favx { flex: none; padding: 2px 8px; }
+.favx:hover { background: rgba(244,33,46,.15); color: #f4212e; }
+
+/* センシ/シャドウ記録の見出しリンク */
+a.sensgroup { display: block; text-decoration: none; }
+a.sensgroup:hover { text-decoration: underline; }
+
+/* お気に入りの並び替えボタン */
+.favmv { flex: none; display: flex; flex-direction: column; gap: 2px; }
+.favmv button { padding: 0 6px; line-height: 1.3; font-size: 11px; }
+.favmv button:disabled { opacity: .35; cursor: default; }
+/* 追加項目マネージャの行(狭いときは2行に折り返す) */
+.favrow.xrow { flex-wrap: wrap; }
+.xctrls { flex: none; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.xchk { display: inline-flex; align-items: center; gap: 3px; font-size: 11px; white-space: nowrap; cursor: pointer; }
+.xchk input { margin: 0; }
+.seg.xseg button { font-size: 11px; padding: 3px 7px; }

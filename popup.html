@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="ja">
+<head><meta charset="utf-8"><link rel="stylesheet" href="popup.css"></head>
+<body>
+  <header>
+    <h1>X Customize Utility</h1>
+    <div class="top">
+      <div class="seg" id="theme"><button data-v="light">ホワイト</button><button data-v="dark">ブラック</button></div>
+      <button id="pin" class="btn" title="ブラウザの右側にサイドパネルで表示(Xを再読み込みしても残ります)">📌 ピン止め</button>
+    </div>
+  </header>
+
+  <details open><summary>表示・外観</summary><div class="grp">
+    <div class="sub">日時・数値</div>
+    <div class="row"><span>日時の並び順</span><div class="seg" data-sel="timeOrder"><button data-v="time">時刻が先</button><button data-v="date">日付が先</button></div></div>
+    <div class="row"><span>時刻の書式</span><div class="seg" data-sel="clockStyle"><button data-v="off">変更なし</button><button data-v="colon24">24時間表記</button></div></div>
+    <div class="row"><span>日時の表示</span><div class="seg" data-sel="timeFmt"><button data-v="off">変更なし</button><button data-v="both">括弧で追記</button><button data-v="exact">詳細のみ</button></div></div>
+    <div class="sub">見た目・メディア</div>
+    <label><input type="checkbox" data-k="numDetail"> 数値を詳細表示</label>
+    <label><input type="checkbox" data-k="starLike"> いいね/通知のハートを星(⭐)にする</label>
+    <label><input type="checkbox" data-k="avatarSquare"> アイコンを四角にする</label>
+    <label><input type="checkbox" data-k="hqMedia"> 画像を常に高画質で読み込む</label>
+    <label><input type="checkbox" data-k="mediaGrid"> 複数メディアを横スクロールなしで一括表示</label>
+    <label><input type="checkbox" data-k="imageZoom"> 画像の詳細表示でズーム(ホイールで拡大)</label>
+    <div class="sub">テーマ変更</div>
+    <label><input type="checkbox" data-k="twitterMode"> Twitter風にする</label>
+    <div class="sub">ぼかし(プライバシー)</div>
+    <label><input type="checkbox" data-k="notifPrivacy"> 通知欄のプライバシー(カーソルで解除)</label>
+    <label><input type="checkbox" data-k="blurInactive"> 使っていないアカウントをぼかす(カーソルで解除)</label>
+    <label><input type="checkbox" data-k="blurLocked"> 鍵垢のポストをぼかす(カーソルで解除)</label>
+    <div class="row"><span>ぼかしの濃さ</span><input type="range" min="1" max="20" step="1" data-k="blurPx"></div>
+  </div></details>
+
+  <details open><summary>プロフィール・判定</summary><div class="grp">
+    <div class="sub">誕生日</div>
+    <div class="row"><span>誕生日</span><div class="seg" data-sel="birthday"><button data-v="show">表示</button><button data-v="hideYear">年のみ非表示</button><button data-v="hide">非表示</button></div></div>
+    <label><input type="checkbox" data-k="birthdayHideSelf"> 自分のプロフィールでは誕生日を非表示(他人は表示)</label>
+    <label><input type="checkbox" data-k="ageLocal"> 誕生日から年齢を表示</label>
+    <label><input type="checkbox" data-k="hideJoin"> 「○年○月からXを利用」を非表示</label>
+    <div class="sub">プロフィールの表示(ボタン順: スコア・ER一覧・増減・From検索・メディア)</div>
+    <label><input type="checkbox" data-k="acctScore"> アカウントスコア</label>
+    <label><input type="checkbox" data-k="erList"> 📈 ER一覧・CSV書き出し</label>
+    <label><input type="checkbox" data-k="followerTrack"> 📉 フォロワー/フォローの増減を記録(この端末内のみ)</label>
+    <label><input type="checkbox" data-k="fromButton"> 🔍 From検索</label>
+    <label><input type="checkbox" data-k="mediaMergeTabs"> 🖼 メディア(画像と動画を一緒に一覧)</label>
+    <label><input type="checkbox" data-k="mediaImageFirst"> メディアを開いた初回を「画像」にする</label>
+    <label><input type="checkbox" data-k="oneClickBlock"> ワンクリックでブロック(ブロックの確認ダイアログを自動でOK)</label>
+    <label><input type="checkbox" data-k="copyName"> ユーザー名コピー</label>
+    <label><input type="checkbox" data-k="copyScreen"> スクリーンネームコピー</label>
+    <label><input type="checkbox" data-k="relIndicator"> プロフィールの関係表示(相互・片思い等)</label>
+    <label><input type="checkbox" data-k="relationChip"> 関係をどの場面でも表示(ポスト・一覧・ホバー)</label>
+    <label><input type="checkbox" data-k="hideUnfollowMutual"> 相互フォローのとき「フォロー中」ボタンを隠す</label>
+    <div class="sub">判定の表示</div>
+    <label><input type="checkbox" data-k="profSensitive"> プロフィール: センシティブ</label>
+    <label><input type="checkbox" data-k="profShadow"> プロフィール: シャドウバン</label>
+    <label><input type="checkbox" data-k="tweetSensitive"> ポスト: センシティブ</label>
+    <label><input type="checkbox" data-k="tweetShadow"> ポスト: シャドウバン</label>
+    <label><input type="checkbox" data-k="tweetSearchBan"> ポスト: 検索(クリックで検索結果を開く)</label>
+    <label><input type="checkbox" data-k="tweetRecommend"> ポスト: おすすめ</label>
+    <label><input type="checkbox" data-k="onlyProblem"> センシティブなどの問題がある時のみ表示</label>
+    <label><input type="checkbox" data-k="autoProfileCheck"> 読み込み時に自動で判定</label>
+  </div></details>
+
+  <details open><summary>ポスト</summary><div class="grp">
+    <div class="sub">表示・並び順</div>
+    <div class="row"><span>ポストへの反応</span><div class="seg" data-sel="reactPlace"><button data-v="off">非表示</button><button data-v="below">ポスト下</button><button data-v="menu">メニュー</button></div></div>
+    <div class="row"><span>エンゲージメント率</span><div class="seg" data-sel="erPlace"><button data-v="off">非表示</button><button data-v="below">ポスト下</button><button data-v="menu">メニュー</button></div></div>
+    <div class="row"><span>メディアを保存する</span><div class="seg" data-sel="dlPlace"><button data-v="off">非表示</button><button data-v="below">ポスト下</button><button data-v="menu">メニュー</button></div></div>
+    <div class="row"><span>返信の並び順</span><div class="seg" data-sel="replySort"><button data-v="off">変更なし</button><button data-v="relevance">関連性</button><button data-v="recent">最新</button><button data-v="likes">いいね</button></div></div>
+    <div class="row"><span>「フォロー中」の並び順</span><div class="seg" data-sel="followSort"><button data-v="off">変更なし</button><button data-v="popular">人気</button><button data-v="latest">最新</button></div></div>
+    <label><input type="checkbox" data-k="forceFollowing"> ホームを「フォロー中」で開く</label>
+    <label><input type="checkbox" data-k="expandMore"> 「さらに表示」を最初から展開</label>
+    <label><input type="checkbox" data-k="revealLabel"> センシティブラベルを初回に自動展開</label>
+    <label><input type="checkbox" data-k="unblur"> センシティブのぼかしだけを解除</label>
+    <label><input type="checkbox" data-k="bookmarkCount"> ブックマーク数の表示</label>
+    <label><input type="checkbox" data-k="notInterested"> 🚫 「興味なし」ボタン</label>
+    <label><input type="checkbox" data-k="showLocation"> ポスト詳細にアカウントの場所を表示</label>
+    <label><input type="checkbox" data-k="showEdited"> 編集済みのポストに編集回数を表示</label>
+    <label><input type="checkbox" data-k="hideText"> ポストの文字を非表示</label>
+    <label><input type="checkbox" data-k="mediaOnly"> 文字のみのポストを非表示(画像・動画のみ表示)</label>
+    <div class="sub">ボタンの非表示</div>
+    <label><input type="checkbox" data-k="hideImgEdit"> 画像の「画像を編集」(Grok)ボタン</label>
+    <label><input type="checkbox" data-k="hideDelete"> ポストの「削除」(…メニュー内)</label>
+    <label><input type="checkbox" data-k="delProtect"> 「削除しないようにロック」を…メニューに追加(削除の下。ロック中は削除を非表示)</label>
+    <div class="sub">共有メニュー</div>
+    <label><input type="checkbox" data-k="shareCheck"> 共有メニューに「ポストの検索チェック」</label>
+    <div class="sub">添付メディアのセンシティブ推定(投稿画面)</div>
+    <label><input type="checkbox" data-k="composeCheck"> 推定を表示する</label>
+    <label><input type="checkbox" data-k="compX"> ① X方針の推定(端末内で計算。画像は外部に送信しません)</label>
+    <label><input type="checkbox" data-k="compGoogle"> ② Google Cloud Vision SafeSearch</label>
+    <input type="password" id="keyGoogle" class="key" placeholder="Google Cloud Vision の APIキー" autocomplete="off">
+    <label><input type="checkbox" data-k="compOpenAI"> ③ OpenAI Moderation(画像対応)</label>
+    <input type="password" id="keyOpenAI" class="key" placeholder="OpenAI の APIキー" autocomplete="off">
+    <p class="uthnote">②③は、添付した画像(動画は途中の1コマ)を各社のサーバーへ送信して判定します。APIキーはこのブラウザ内にだけ保存されます。</p>
+  </div></details>
+
+  <details><summary>サイドメニュー</summary><div class="grp">
+    <div class="sub">左サイドメニューの非表示</div>
+    <label><input type="checkbox" data-k="hideSearchTopics"> 話題を検索</label>
+    <label><input type="checkbox" data-k="hideFollowBtn"> フォローする</label>
+    <label><input type="checkbox" data-k="hideCall"> 通話</label>
+    <label><input type="checkbox" data-k="hideGrok"> Grok</label>
+    <label><input type="checkbox" data-k="hideCreator"> クリエイタースタジオ</label>
+    <label><input type="checkbox" data-k="hidePremium"> プレミアム</label>
+    <label><input type="checkbox" data-k="hideCommunities"> コミュニティ</label>
+    <label><input type="checkbox" data-k="hideBusiness"> ビジネス</label>
+    <label><input type="checkbox" data-k="hideAds"> 広告</label>
+    <label><input type="checkbox" data-k="hideCreateSpace"> スペースを作成</label>
+    <label><input type="checkbox" data-k="hideArticles"> 記事</label>
+    <div class="sub">追加項目</div>
+    <p class="uthnote">チェックで表示/非表示、「もっと見る/左」で表示場所、↑↓で並び順を項目ごとに設定できます。自作項目はメニュー名とURLを入れて追加してください。</p>
+    <div id="extraMgr" class="favlist"></div>
+    <div class="xdt-snadd" style="margin:4px 0"><input type="text" id="extraName" placeholder="メニュー名"><input type="text" id="extraUrl" placeholder="URL(例: https://x.com/i/bookmarks)"><button id="extraAdd" class="btn" type="button">追加</button></div>
+    <div class="sub">ボタンの非表示</div>
+    <label><input type="checkbox" data-k="hideGetVerified"> 「認証される」(非プレミアム時のボタン)</label>
+    <label><input type="checkbox" data-k="hideBadge"> 認証バッジ(プレミアム導線は対象外)</label>
+    <label><input type="checkbox" data-k="hideBoost"> ブースト(ポスト)</label>
+    <label><input type="checkbox" data-k="hideGrokBtn"> Grokのボタン</label>
+    <div class="sub">右サイドメニュー・タイムライン</div>
+    <label><input type="checkbox" data-k="hideSearchBar"> 検索バー</label>
+    <label><input type="checkbox" data-k="hidePremiumSub"> プレミアムにサブスクライブ</label>
+    <label><input type="checkbox" data-k="hideLive"> ライブ放送</label>
+    <label><input type="checkbox" data-k="hideNews"> 本日のニュース</label>
+    <label><input type="checkbox" data-k="hideTrends"> 「いま」を見つけよう</label>
+    <label><input type="checkbox" data-k="hideWhoFollow"> おすすめユーザー</label>
+    <label><input type="checkbox" data-k="hideForYou"> おすすめ(ホームのタブ)</label>
+    <label><input type="checkbox" data-k="hideTLWhoFollow"> スクロール中に出るおすすめユーザー</label>
+    <label><input type="checkbox" data-k="hideFooter"> フッター(利用規約・プライバシー・© X Corp. 等)</label>
+  </div></details>
+
+  <details open><summary>文字編集</summary><div class="grp">
+    <p class="uthnote">下の3つのどれかを有効にすると、投稿・返信画面に「📝 書き込み」ボタンが出ます(定型文・下書き・返信相手の名前)。</p>
+    <div class="sub">定型文(投稿・返信画面の 📝 から挿入)</div>
+    <label><input type="checkbox" data-k="snipEnable"> 定型文の有効化</label>
+    <textarea id="snText" class="bigtext" rows="2" placeholder="定型文を入力して「追加」"></textarea>
+    <div class="row"><button id="snAdd" class="btn" type="button">追加</button><span id="snInfo" class="diag"></span></div>
+    <div id="snList" class="snl"></div>
+    <div class="sub">下書き(ローカル保存・API不使用)</div>
+    <label><input type="checkbox" data-k="draftEnable"> 下書きの有効化</label>
+    <textarea id="dfText" class="bigtext" rows="3" placeholder="下書きを入力して「保存」。投稿・返信画面の 📝 → 📄下書き から呼び出せます"></textarea>
+    <div class="row"><button id="dfAdd" class="btn" type="button">保存</button><button id="dfCancel" class="btn" type="button" style="display:none">編集をやめる</button><span id="dfInfo" class="diag"></span></div>
+    <div id="dfList" class="snl"></div>
+    <div class="sub">返信</div>
+    <label><input type="checkbox" data-k="replyNameEnable"> 返信相手の名前を入れるの有効化</label>
+    <div class="sub">高度なミュート(Xの標準より細かい条件)</div>
+    <textarea id="mtText" class="bigtext" rows="3" placeholder="語句 / /正規表現/ / @ユーザー / #タグ を入力して「追加」"></textarea>
+    <div class="row"><button id="mtAdd" class="btn" type="button">追加</button><span id="mtInfo" class="diag"></span></div>
+    <div id="mtList" class="snl"></div>
+    <p class="uthnote">一致したポストをタイムライン上で非表示にします(ローカル)。/…/ で正規表現、/…/i で大文字小文字無視、@名前 で投稿者、#タグ も使えます。</p>
+    <div class="sub">マーカー・下線</div>
+    <label><input type="checkbox" data-k="markEngaged"> いいね(ピンク)・リポスト(緑)を左の縦線で強調</label>
+    <label><input type="checkbox" data-k="lockMark"> 鍵垢の名前をマーカーで強調 <input type="color" data-k="lockColor"></label>
+    <label><input type="checkbox" data-k="urlMark"> URLのマーカー <input type="color" data-k="urlColor"></label>
+    <label><input type="checkbox" data-k="urlLine"> URLの下線 <input type="color" data-k="urlLineColor"></label>
+    <label><input type="checkbox" data-k="hashMark"> ハッシュタグのマーカー <input type="color" data-k="hashColor"></label>
+    <label><input type="checkbox" data-k="hashLine"> ハッシュタグの下線 <input type="color" data-k="hashLineColor"></label>
+    <div class="sub">キーワード(TL・プロフィール・ポスト・DM)</div>
+    <label><input type="checkbox" data-k="hlOn"> キーワード強調を有効にする</label>
+    <label><input type="checkbox" data-k="hlMark"> マーカー <input type="color" data-k="hlColor"></label>
+    <label><input type="checkbox" data-k="hlLine"> 下線 <input type="color" data-k="hlLineColor"></label>
+    <textarea id="hlText" class="bigtext" rows="2" placeholder="強調したい言葉を入力して「追加」(複数登録できます)"></textarea>
+    <div class="row"><button id="hlAdd" class="btn" type="button">追加</button><span id="hlInfo" class="diag"></span></div>
+    <div id="hlList" class="snl"></div>
+  </div></details>
+
+  <details><summary>お気に入り</summary><div class="grp">
+    <div class="sub">設定</div>
+    <label><input type="checkbox" data-k="favStar"> お気に入りの名前の横に★or♥を表示</label>
+    <label><input type="checkbox" data-k="favMenuBtn"> プロフィールの「…」メニューに「お気に入りに追加/削除」を出す</label>
+    <p class="uthnote">お気に入りに追加したユーザーは、X上で名前の横に★または❤️が付きます。各ユーザーの ★/❤️ は一覧のボタンで切り替えられます。一覧のアイコンや名前をクリックするとプロフィールを開きます。</p>
+    <div class="sub">スクリーンネーム追加・お気に入りリスト</div>
+    <div class="xdt-snadd" style="margin:4px 0"><input type="text" id="favNew" placeholder="@スクリーンネーム を入力して追加"><button id="favAdd" class="btn" type="button">追加</button></div>
+    <div id="favList" class="favlist"></div>
+  </div></details>
+
+  <details><summary>削除ロック</summary><div class="grp">
+    <p class="uthnote">「削除しないようにロック」したポストの一覧です。ロック中はそのポストの…メニューの「削除」が無効化されます(ポストページのURLからも手動で追加できます)。この機能を使うには「ポスト」の「削除しないようにロック」をオンにしてください。</p>
+    <div class="xdt-snadd" style="margin:4px 0"><input type="text" id="lockNew" placeholder="ポストのURL(例: https://x.com/user/status/123…)"><button id="lockAdd" class="btn" type="button">ロック追加</button></div>
+    <div id="lockList" class="favlist"></div>
+  </div></details>
+
+  <details open><summary>統計・情報</summary><div class="grp">
+    <div class="sub">取得状況</div>
+    <div id="diag" class="diag">確認中…</div>
+    <p class="uthnote">API=Xの内部APIをフックできた回数 / React=ポスト内部データを読めた回数 / ユーザー=取得したユーザー数 / ポスト=取得したポスト数 / エラー=処理中に出た例外の件数。数が増えていれば正常に動いています(エラーが多いときは拡張機能やXのタブを再読み込みしてください)。</p>
+    <div class="sub">推移グラフ(アカウントごと・この端末内)</div>
+    <div class="xdt-snadd" style="margin:4px 0"><input type="text" id="statNew" placeholder="@ユーザーID を入力して追加"><button id="statAdd" class="btn" type="button">追加</button></div>
+    <div class="row"><span>アカウント</span><select id="statAcct"></select><button id="statDel" class="btn" type="button" title="このアカウントを統計から削除">削除</button></div>
+    <div class="row"><span>指標</span><div class="seg" data-sel="chartMetric"><button data-v="er">ER</button><button data-v="fo">フォロワー</button><button data-v="sens">センシ件数</button></div></div>
+    <div class="row"><span>表示</span><div class="seg" data-sel="chartMode"><button data-v="line">折れ線</button><button data-v="bar">棒</button><button data-v="num">数字</button></div></div>
+    <div class="row"><span>期間</span><div class="seg" data-sel="chartPeriod"><button data-v="3d">3日</button><button data-v="7d">7日</button><button data-v="28d">4週</button><button data-v="6m">6か月</button><button data-v="1y">1年</button></div></div>
+    <div class="row"><span>集計</span><div class="seg" data-sel="chartAgg"><button data-v="hour">時間ごと</button><button data-v="day">日付ごと</button></div></div>
+    <div id="statChart" class="statchart"></div>
+    <p class="uthnote">統計に出すアカウントは「追加」で手動登録、「削除」で解除します(自動では増えません)。登録したアカウントは、X上で見かけるとフォロワー数を記録します(この端末内のみ)。点/棒にカーソルを合わせると詳細な数値が出ます。</p>
+    <div class="sub">センシティブの記録(ログイン中のアカウント・ユーザーごと)</div>
+    <div class="row"><span>記録する期間</span><div class="seg" data-sel="sensWindow"><button data-v="1d">1日</button><button data-v="3d">3日</button><button data-v="7d">7日</button><button data-v="1m">1か月</button></div></div>
+    <div id="sensBox" class="diag">記録なし</div>
+    <div class="xdt-snadd" style="margin:6px 0"><input type="text" id="sensNew" placeholder="ポストIDまたはURLを入力して手動追加"><button id="sensAddBtn" class="btn" type="button">追加</button></div>
+    <div id="sensList" class="snl"></div>
+    <button id="sensReset" class="btn" type="button">記録をすべて消す</button>
+    <p class="uthnote">「記録する期間」で選んだ日数以内に投稿されたポストでセンシティブを検知した場合だけ記録します。各記録に投稿者の@ID・投稿日時・検知からの残り時間(1日)・解除済みを表示し、アカウント(@ID)ごとに分けて表示します。</p>
+    <div class="sub">シャドウバンの記録(解除まで7日)</div>
+    <div id="shadowBox" class="diag">記録なし</div>
+    <div class="xdt-snadd" style="margin:6px 0"><input type="text" id="shadowNew" placeholder="@スクリーンネーム を入力して手動追加"><button id="shadowAddBtn" class="btn" type="button">追加</button></div>
+    <div id="shadowList" class="snl"></div>
+    <button id="shadowReset" class="btn" type="button">シャドウバンの記録をすべて消す</button>
+    <p class="uthnote">プロフィールやポストで「シャドウバン 疑い」を検知したアカウントを、スクリーンネーム付きで記録します。各記録に検知日時と解除までの残り時間(7日)を表示します。手動での追加・削除もできます。</p>
+    <details class="inner"><summary>センシティブ判定の解説</summary><div class="grp help">
+    <p><b>センシティブ率(「直近」の範囲)</b><br>最新5件(件数。リポストも含み、リポストは元ポストの状態)で数えます。公開コード(safety-label-user-agg)では、ポストに新しく NSFW_HIGH_PRECISION が付いたとき、最新5ポストのうち60日以内の同ラベルが3件以上でアカウントにラベル(7日)。</p>
+    <p class="uthnote">公開コード(xai-org/x-algorithm)を第三者が読み解いた内容に基づく説明で、本番と同じとは限りません。時刻は拡張機能が検知した時刻で、Xがラベルを付けた正確な時刻ではありません。</p>
+    </div></details>
+  </div></details>
+
+  <details><summary>その他</summary><div class="grp">
+    <div class="sub">全般</div>
+    <label><input type="checkbox" data-k="safeMode"> セーフモード(自動で行う通信をすべて停止)</label>
+    <button id="reload" class="btn" type="button">Xのタブを再読み込み</button>
+    <div class="sub">設定の初期化</div>
+    <button id="resetSettings" class="btn" type="button">設定をすべて初期化</button>
+    <p class="uthnote">すべての設定を既定値に戻します(オン/オフ・色・書式など)。定型文・下書き・お気に入り・各記録・APIキーなどの保存データは消えません。押すと確認のため2回押しになります。</p>
+    <div class="sub">データのバックアップ(拡張の入れ直し対策)</div>
+    <div class="row"><button id="expBtn" class="btn" type="button">設定・データを書き出す</button></div>
+    <label class="file">設定・データを読み込む <input id="impFile" type="file" accept=".json,application/json"></label>
+    <div id="backupInfo" class="diag"></div>
+    <p class="uthnote">定型文・強調・高度なミュート・ER/増減の記録・センシティブの記録・お気に入り・APIキーを含め、1つのJSONに書き出し/読み込みできます。拡張を入れ直す前に書き出せば、あとから戻せます。</p>
+    <div class="sub">スクリーンネーム ↔ ID 変換</div>
+    <div class="xdt-snadd" style="margin:4px 0"><input type="text" id="idConvIn" placeholder="@スクリーンネーム または 数字ID"><button id="idConvBtn" class="btn" type="button">変換</button></div>
+    <div id="idConvOut" class="diag"></div>
+    <p class="uthnote">これまで表示したユーザーの対応表から変換します。未取得の場合は、そのプロフィールを一度開くと取得できます。</p>
+    <div class="sub">Under the Hood</div>
+    <button id="uth" class="btn" type="button">Under the Hood を開く</button>
+    <label class="file">レポート(JSON)を取り込む <input id="uthfile" type="file" accept=".json,application/json"></label>
+    <button id="uthreset" class="btn" type="button">レポートをリセット</button>
+    <div id="uthinfo" class="diag"></div>
+    <details class="inner"><summary>リーチ指標・シャドウバンの解説</summary><div class="grp help">
+    <p><b>リーチ指数(スコア 0〜100)</b><br>フォロワー÷フォロー比(40%)と直近ポストの平均ER(60%)からの参考値。センシティブ率や制限シグナルで下がります。Xの実際のスコアではありません。</p>
+    <p><b>ER(エンゲージメント率)</b><br>(いいね+リポスト+引用+返信+ブックマーク)÷インプレッション×100。3%以上=高め、1%未満=低め。</p>
+    <p><b>シャドウバン・ポストの検索</b><br>アカウントの兆候とfrom:検索の結果から推定。自分視点では出てしまうため、Under the Hood の取り込みが有効です。100%正確ではありません。</p>
+    </div></details>
+  </div></details>
+  <script src="popup.js"></script>
+</body>
+</html>

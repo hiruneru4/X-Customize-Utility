@@ -1,0 +1,327 @@
+/* ===== テーマ変数(ツール内UI) ===== */
+html { --xdt-bg: #fff; --xdt-fg: #0f1419; --xdt-line: #cfd9de; --xdt-sub: #536471; }
+html[data-xdt-theme="dark"] { --xdt-bg: #000; --xdt-fg: #e7e9ea; --xdt-line: #2f3336; --xdt-sub: #71767b; }
+
+/* ===== 外観トグル ===== */
+html[data-xdt-bday="hide"] [data-testid="UserBirthdate"],
+html[data-xdt-hidejoin="1"] [data-testid="UserJoinDate"],
+html[data-xdt-hidetext="1"] [data-testid="tweetText"],
+html[data-xdt-hidecall="1"] :is([data-testid*="call" i], [aria-label*="通話"], [aria-label*="Audio call" i], [aria-label*="Video call" i]),
+html[data-xdt-hidebadge="1"] [data-testid="icon-verified"],
+html[data-xdt-hideboost="1"] :is([data-testid*="boost" i], a[href*="/boost"]),
+html[data-xdt-hidegrok="1"] :is([data-testid="GrokDrawer"], [aria-label^="Grok" i], a[href="/i/grok"]),
+html[data-xdt-hidelive="1"] :is([data-testid="SpaceDock"], [data-testid="SpacesBar"], a[href*="/i/spaces/"]),
+.xdt-gone { display: none !important; }
+
+html[data-xdt-square="1"] [data-testid^="UserAvatar-Container-"] :is(div, img, a) { border-radius: 12% !important; clip-path: none !important; }
+
+/* いいね=星 (金色) */
+html[data-xdt-star="1"] :is([data-testid="unlike"], [data-testid="unlike"] *, [data-testid="like"]:hover, [data-testid="like"]:hover *) { color: #ffad1f !important; }
+
+/* いいね/リポストの強調(左の縦線・リポスト優先) */
+article[data-xdt-mark="like"] { box-shadow: inset 3px 0 0 #f91880; }
+article[data-xdt-mark="rt"] { box-shadow: inset 3px 0 0 #00ba7c; }
+
+/* 鍵垢の名前マーカー(文字色はそのまま) */
+/* Xの文字要素は透明な背景色を持つため、!important と高い優先度で確実に上書きする */
+html .xdt-lock, .xdt-lock { background-color: color-mix(in srgb, var(--xdt-lockc, #ffd400) 45%, transparent) !important; border-radius: 3px !important; padding: 0 2px !important; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+
+/* 絞り込みで隠すポスト / メニュー自動操作中は見えなくする */
+.xdt-hide { display: none !important; }
+.xdt-fhide { display: none !important; }
+html[data-xdt-busy="1"] #layers { opacity: 0 !important; }
+
+/* ===== チップ(固定幅スロットで位置を固定) ===== */
+.xdt-tbadges { display: block; margin: 2px 0; overflow: hidden; font-family: inherit; }
+.xdt-row { display: flex; flex-wrap: nowrap; gap: 4px; height: 22px; align-items: center; overflow: hidden; font-family: inherit; }
+.xdt-ppanel { margin: 6px 0; min-height: 22px; font-family: inherit; }
+.xdt-chip {
+  display: inline-flex; align-items: center; justify-content: center; gap: 4px; flex: 0 0 auto; margin: 0; padding: 0 6px; height: 20px; box-sizing: border-box;
+  border: 1px solid transparent; border-radius: 9999px; font: inherit; font-size: 12px; line-height: 18px; white-space: nowrap;
+  color: inherit; background: rgba(128,128,128,.10); cursor: default; text-decoration: none;
+}
+button.xdt-chip { cursor: pointer; }
+button.xdt-chip:hover { filter: brightness(1.2); }
+.xdt-chip .xdt-l { opacity: .65; font-weight: 400; }
+.xdt-chip .xdt-v { font-weight: 700; }
+.xdt-ok   { color: #00ba7c; background: rgba(0,186,124,.12); }
+.xdt-bad  { color: #f4212e; background: rgba(244,33,46,.12); }
+.xdt-warn { color: #ff9f0a; background: rgba(255,159,10,.14); }
+.xdt-info { color: #1d9bf0; background: rgba(29,155,240,.12); }
+.xdt-unk  { color: #71767b; background: rgba(128,128,128,.10); }
+.xdt-chip.xdt-ok .xdt-l, .xdt-chip.xdt-bad .xdt-l, .xdt-chip.xdt-warn .xdt-l, .xdt-chip.xdt-info .xdt-l { color: inherit; }
+.xdt-w1 { min-width: 8.2em; } .xdt-w2 { min-width: 9.4em; } .xdt-w3 { min-width: 10.2em; } .xdt-w4 { min-width: 8em; }
+.xdt-w5 { min-width: 7em; } .xdt-w6 { min-width: 6em; } .xdt-w7 { min-width: 4.8em; } .xdt-w8 { min-width: 4.8em; } .xdt-w9 { min-width: 5.4em; }
+
+/* ===== アクションバーの追加ボタン ===== */
+.xdt-bm { display: flex; align-items: center; gap: 3px; box-sizing: border-box; padding: 0; font: inherit; font-size: 13px; min-width: 0; }
+.xdt-loc { color: inherit; }
+
+/* ===== コピーボタン(プロフィールのみ) ===== */
+button.xdt-copy { display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; width: 20px; height: 20px; margin-left: 4px; padding: 0; border: 0; border-radius: 9999px; background: transparent; color: inherit; opacity: .55; cursor: pointer; }
+button.xdt-copy:hover { opacity: 1; background: rgba(128,128,128,.2); }
+button.xdt-copy svg { width: 14px; height: 14px; fill: currentColor; }
+button.xdt-copy.xdt-copied { color: #00ba7c; opacity: 1; }
+
+/* ===== ポップオーバー ===== */
+.xdt-pop { position: fixed; z-index: 10000; display: flex; flex-direction: column; padding: 4px; box-sizing: border-box; background: var(--xdt-bg); color: var(--xdt-fg); border: 1px solid var(--xdt-line); border-radius: 12px; box-shadow: 0 4px 18px rgba(0,0,0,.3); font: 14px/20px inherit; }
+.xdt-pop > a { display: block; padding: 8px 12px; border-radius: 8px; color: inherit; text-decoration: none; font-weight: 700; }
+.xdt-pop > a:hover { background: rgba(128,128,128,.18); }
+.xdt-erp { padding: 8px 10px; font-size: 12px; line-height: 16px; }
+.xdt-erp b { display: block; margin-bottom: 6px; font-size: 13px; }
+.xdt-erp .r { display: grid; grid-template-columns: 74px 1fr 92px; align-items: center; gap: 6px; margin: 3px 0; }
+.xdt-erp .r i { display: block; height: 8px; border-radius: 4px; background: rgba(128,128,128,.25); overflow: hidden; }
+.xdt-erp .r u { display: block; height: 100%; background: #1d9bf0; }
+.xdt-erp .r em { font-style: normal; text-align: right; opacity: .85; }
+.xdt-erp small { display: block; margin-top: 6px; opacity: .65; }
+
+/* ===== メニュー追加項目 ===== */
+.xdt-mi .xdt-mi-i { display: inline-block; width: 20px; text-align: center; font-size: 17px; line-height: 20px; }
+
+/* ===== 絞り込み(コンパクト・右端) ===== */
+
+/* ===== 投稿画面の判定 ===== */
+.xdt-compose { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0; }
+
+/* ===== ピン止めドック ===== */
+
+/* ===== 「…」/共有/もっと見るメニューの追加項目(自前の行) ===== */
+.xdt-mi { display: flex; align-items: center; gap: 12px; box-sizing: border-box; flex: 0 0 auto; align-self: stretch; width: 100%; padding: 12px 16px; cursor: pointer; line-height: 20px; }
+.xdt-mi:hover { background: rgba(128,128,128,.14); }
+.xdt-mi-i { display: inline-block; width: 24px; flex: none; text-align: center; font-size: 18px; line-height: 20px; }
+.xdt-mi-t { min-width: 0; }
+
+/* ===== From検索ボタン(隣のボタンの高さ・書体に合わせる) ===== */
+.xdt-from { display: inline-flex; align-items: center; justify-content: center; gap: 6px; flex: 0 0 auto; align-self: center; box-sizing: border-box; margin: 0 8px 0 0; padding: 0 16px; border: 1px solid rgba(128,128,128,.55); border-radius: 9999px; background: transparent; color: inherit; line-height: 1; white-space: nowrap; cursor: pointer; position: relative; z-index: 1; }
+.xdt-from:hover { background: rgba(128,128,128,.15); }
+
+/* ===== メディア欄の画像/動画切替 ===== */
+
+/* ===== ぼかし解除 ===== */
+html[data-xdt-unblur="1"] article :is([style*="blur"], [data-testid="tweetPhoto"] *, [data-testid="videoPlayer"] *) { filter: none !important; backdrop-filter: none !important; }
+
+/* ===== URL・ハッシュタグの強調(マーカー+下線。色は設定) ===== */
+
+/* ===== 複数メディアの一括表示(横スクロールなし) ===== */
+.xdt-mroot { display: none !important; }
+.xdt-mgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin: 8px 0; border: 1px solid var(--xdt-line, rgba(128,128,128,.4)); border-radius: 16px; overflow: hidden; }
+
+/* ===== 「さらに表示」の自動展開 ===== */
+.xdt-orig { display: none !important; }
+.xdt-full { white-space: pre-wrap; overflow-wrap: anywhere; }
+.xdt-full a { color: rgb(29,155,240); text-decoration: none; }
+
+/* ===== 相互 / 片思われ / 片思い ===== */
+.xdt-rel { display: inline-block; margin-left: 6px; padding: 0 7px; border-radius: 4px; background: rgba(128,128,128,.18); font-size: 12px; font-weight: 700; line-height: 18px; vertical-align: middle; white-space: nowrap; }
+
+/* ===== 画像ズーム専用ビューア ===== */
+.xdt-zoom { position: fixed; inset: 0; z-index: 10002; background: rgba(0,0,0,.92); overflow: hidden; touch-action: none; }
+.xdt-zoom img { position: absolute; left: 50%; top: 50%; max-width: 96vw; max-height: 92vh; user-select: none; -webkit-user-drag: none; will-change: transform; }
+.xdt-zoom-x { position: absolute; top: 14px; right: 18px; width: 38px; height: 38px; border: 0; border-radius: 50%; background: rgba(255,255,255,.18); color: #fff; font-size: 18px; cursor: pointer; }
+.xdt-zoom-x:hover { background: rgba(255,255,255,.32); }
+.xdt-zoom-h { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); padding: 4px 12px; border-radius: 9999px; background: rgba(0,0,0,.55); color: #ddd; font: 12px/18px system-ui, sans-serif; pointer-events: none; white-space: nowrap; }
+
+/* ===== 複数メディアの格子(動画・GIF対応) ===== */
+.xdt-gi { position: relative; overflow: hidden; cursor: pointer; aspect-ratio: 16 / 10; background: rgba(128,128,128,.2); }
+.xdt-gi img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.xdt-gi:last-child:nth-child(odd) { grid-column: 1 / 3; aspect-ratio: 16 / 7; }
+.xdt-play { position: absolute; left: 8px; bottom: 8px; padding: 1px 8px; border-radius: 9999px; background: rgba(0,0,0,.65); color: #fff; font-size: 12px; font-weight: 700; line-height: 18px; pointer-events: none; }
+
+/* ===== いいね+リポスト両方(リポストが左=優先) ===== */
+article[data-xdt-mark="both"] { box-shadow: inset 3px 0 0 #00ba7c, inset 6px 0 0 #f91880; }
+
+/* ===== メディア一覧(画像+動画) ===== */
+.xdt-mview { position: fixed; inset: 0; z-index: 10001; overflow-y: auto; }
+.xdt-mv-h { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; gap: 12px; padding: 10px 16px; background: inherit; border-bottom: 1px solid rgba(128,128,128,.35); }
+.xdt-mv-h b { flex: 1; font-size: 16px; }
+.xdt-mv-f { display: inline-flex; border: 1px solid rgba(128,128,128,.5); border-radius: 8px; overflow: hidden; }
+.xdt-mv-f button { padding: 4px 12px; border: 0; background: transparent; color: inherit; font: inherit; font-size: 13px; cursor: pointer; }
+.xdt-mv-f button.on { background: #1d9bf0; color: #fff; }
+.xdt-mv-x { width: 34px; height: 34px; border: 0; border-radius: 50%; background: rgba(128,128,128,.25); color: inherit; font-size: 16px; cursor: pointer; }
+.xdt-mv-g { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 3px; padding: 3px; }
+.xdt-mvt { position: relative; display: block; aspect-ratio: 1; overflow: hidden; background: rgba(128,128,128,.2); }
+.xdt-mvt img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.xdt-mv-s { padding: 16px; text-align: center; font-size: 13px; opacity: .75; }
+
+/* ===== 定型文(投稿画面のツールバー内の小さなボタン) ===== */
+.xdt-sn { flex: none; width: 34px; height: 34px; margin-left: 2px; padding: 0; border: 0; border-radius: 50%; background: transparent; font-size: 17px; line-height: 34px; text-align: center; cursor: pointer; }
+.xdt-sn:hover { background: rgba(29,155,240,.12); }
+.xdt-snl { display: flex; flex-direction: column; gap: 2px; max-height: 260px; overflow-y: auto; }
+.xdt-snb { display: block; width: 100%; padding: 7px 10px; border: 0; border-radius: 8px; background: transparent; color: inherit; font: inherit; font-size: 13px; text-align: left; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.xdt-snb:hover { background: rgba(128,128,128,.18); }
+
+/* ===== URL・ハッシュタグ: マーカーと下線は別々 ===== */
+html[data-xdt-url-mark="1"] [data-testid="tweetText"] a[href^="https://t.co/"] { background: color-mix(in srgb, var(--xdt-url) 40%, transparent); border-radius: 3px; padding: 0 2px; }
+html[data-xdt-url-line="1"] [data-testid="tweetText"] a[href^="https://t.co/"] { text-decoration: underline !important; text-decoration-color: var(--xdt-urlline); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+html[data-xdt-hash-mark="1"] [data-testid="tweetText"] a[href*="/hashtag/"] { background: color-mix(in srgb, var(--xdt-hash) 40%, transparent); border-radius: 3px; padding: 0 2px; }
+html[data-xdt-hash-line="1"] [data-testid="tweetText"] a[href*="/hashtag/"] { text-decoration: underline !important; text-decoration-color: var(--xdt-hashline); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+
+/* ===== ブックマーク数(公式アイコンの横) / 名前行の関係 / アカウントのぼかし ===== */
+.xdt-bmn { display: inline-block; flex: none; white-space: nowrap; }
+.xdt-relb { display: inline-block; margin-left: 6px; padding: 0 6px; border-radius: 4px; font-size: 12px; font-weight: 700; line-height: 17px; vertical-align: baseline; white-space: nowrap; }
+.xdt-blur { filter: blur(var(--xdt-blurpx, 6px)); transition: none; }
+.xdt-blur:hover { filter: none; }
+
+/* ===== いいねを星にしたとき、縦線も黄色に連動 ===== */
+html[data-xdt-star="1"] article[data-xdt-mark="like"] { box-shadow: inset 3px 0 0 #ffad1f; }
+html[data-xdt-star="1"] article[data-xdt-mark="both"] { box-shadow: inset 3px 0 0 #00ba7c, inset 6px 0 0 #ffad1f; }
+
+/* ===== チップ以外の余白はクリックを素通りさせ、ポストをクリックして開けるようにする ===== */
+.xdt-tbadges, .xdt-tbadges .xdt-row, .xdt-ppanel, .xdt-ppanel .xdt-row { pointer-events: none; }
+.xdt-tbadges .xdt-chip, .xdt-ppanel .xdt-chip { pointer-events: auto; }
+
+/* ホバーカード: 関係は独立した1行 */
+
+/* ホバーカード: 関係はアイコンとフォローボタンの間 / ボタンの下 */
+.xdt-relb.xdt-relb-mid { align-self: center; margin: 0 8px; }
+.xdt-relb.xdt-relb-under { display: block; width: fit-content; margin: 6px 0 0 auto; }
+
+/* アイコンを四角にする: アイコンの画像ビューア(拡大表示)にも反映 */
+html[data-xdt-square="1"] :is(#layers, [aria-modal="true"]) :is(img[src*="profile_images"], [style*="profile_images"], :has(> img[src*="profile_images"]), :has(> * > img[src*="profile_images"])) { border-radius: 12% !important; clip-path: none !important; }
+
+/* ぼかし解除: 画像ビューア・引用ポスト・カードのメディアにも */
+html[data-xdt-unblur="1"] :is(#layers img[src*="pbs.twimg.com/media"], [data-testid="quoteTweet"] [data-testid="tweetPhoto"], [data-testid^="card.layout"][data-testid$=".media"]) { filter: none !important; }
+html[data-xdt-unblur="1"] :is([data-testid="quoteTweet"] [data-testid="tweetPhoto"] *, [data-testid^="card.layout"][data-testid$=".media"] *) { filter: none !important; backdrop-filter: none !important; }
+
+/* 四角アイコン(DM一覧・DMの相手のプロフなどすべて) */
+.xdt-sq { border-radius: 12% !important; clip-path: none !important; mask: none !important; -webkit-mask: none !important; }
+svg.xdt-sq { overflow: hidden !important; }
+
+/* ===== 通知欄のプライバシー: アイコンと名前をぼかし、カーソルのある通知だけ解除(.xdt-hov は実際にマウスが動いた行) ===== */
+html[data-xdt-notifpriv="1"][data-xdt-notif="1"] [data-testid="primaryColumn"] :is([data-testid^="UserAvatar-Container"], img[src*="profile_images"], [style*="profile_images"], [data-testid="User-Name"], [data-testid="UserCell"] a[href^="/"], .xdt-np, a[href^="/"]:not([href*="/status/"]):not([href^="/notifications"]):not([href^="/i/"]):not([href^="/hashtag/"]):not([href^="/search"]):not([href^="/settings"]):not([href^="/home"]):not([href^="/explore"]):not([href^="/messages"]):not([href^="/compose"]):not([role="tab"]):not([data-testid="tweetText"] a)) { filter: blur(var(--xdt-blurpx, 6px)); }
+html[data-xdt-notifpriv="1"][data-xdt-notif="1"] [data-testid="primaryColumn"] .xdt-hov :is([data-testid^="UserAvatar-Container"], img[src*="profile_images"], [style*="profile_images"], [data-testid="User-Name"], [data-testid="UserCell"] a[href^="/"], .xdt-np, a[href^="/"]:not([href*="/status/"]):not([href^="/notifications"]):not([href^="/i/"]):not([href^="/hashtag/"]):not([href^="/search"]):not([href^="/settings"]):not([href^="/home"]):not([href^="/explore"]):not([href^="/messages"]):not([href^="/compose"]):not([role="tab"]):not([data-testid="tweetText"] a)) { filter: none; }
+
+/* ===== DMの四角アイコン(Xの再描画でクラスが外れても効くよう、DMの中はCSSでも指定) ===== */
+html[data-xdt-square="1"] :is([data-testid="conversation"], [data-testid="DMDrawer"], [data-testid="DmActivityContainer"], [data-testid="DmScrollerContainer"]) :is(img[src*="profile_images"], :has(> img[src*="profile_images"]), [style*="profile_images"]) { border-radius: 12% !important; clip-path: none !important; }
+
+/* ===== 複数メディアの格子: 動画をその場で再生 ===== */
+.xdt-gi video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #000; z-index: 2; }
+.xdt-gi.xdt-playing .xdt-play { display: none; }
+
+.xdt-compose { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0; font-family: inherit; }
+
+.xdt-pop .xdt-erp a { display: block; padding: 2px 0; font-size: 11px; font-weight: 400; color: #1d9bf0; word-break: break-all; }
+.xdt-pop .xdt-erp a:hover { background: none; text-decoration: underline; }
+
+/* ===== 背景色・背景画像・文字色・中央列の幅 ===== */
+/* 壁紙は最背面の固定レイヤー。--xdt-tint は、選んだ色を色の濃さぶんだけテーマ地色に混ぜたパネルの色 */
+html[data-xdt-bgpanel="1"] { --xdt-tint: color-mix(in srgb, var(--xdt-bgc) var(--xdt-colorstr, 0%), var(--xdt-panelbase)); }
+html[data-xdt-bgcolor="1"] body { background-color: var(--xdt-bgc) !important; }
+html[data-xdt-bgimg="1"] body { background-image: var(--xdt-bgimg) !important; background-size: cover !important; background-position: center center !important; background-attachment: fixed !important; background-repeat: no-repeat !important; }
+/* Xの不透明な背景面を透過させ、壁紙(色・画像)を見せる。アプリ全体の土台を透過 */
+html[data-xdt-bgpanel="1"] :is(#react-root, #react-root > div,
+  main[role="main"], main[role="main"] > div, main[role="main"] > div > div,
+  [data-testid="DmActivityContainer"], [data-testid="DMDrawer"], [data-testid="DmScrollerContainer"], [data-testid="conversation"],
+  header[role="banner"], header[role="banner"] > div) { background-color: transparent !important; }
+/* 中央・右の列の中身は、ボタン/アイコン/メディア/画像以外をすべて透過して「白い部分」を無くす */
+html[data-xdt-bgpanel="1"] :is([data-testid="primaryColumn"], [data-testid="sidebarColumn"]) div:not([role="button"]):not([data-testid="tweetPhoto"]):not([data-testid*="video" i]):not([style*="background-image"]) { background-color: transparent !important; }
+/* 中央列・右サイドメニュー・左サイドメニュー・DMを半透明パネル(すりガラス)にする */
+html[data-xdt-bgpanel="1"] :is([data-testid="primaryColumn"], [data-testid="sidebarColumn"], header[role="banner"] nav, [data-testid="DMDrawer"], [role="menu"], [data-testid="Dropdown"], [data-testid="HoverCard"], [data-testid="sheetDialog"]) {
+  background-color: color-mix(in srgb, var(--xdt-tint) calc(var(--xdt-bgop) * 100%), transparent) !important;
+  backdrop-filter: blur(var(--xdt-bgblur)) saturate(1.15); -webkit-backdrop-filter: blur(var(--xdt-bgblur)) saturate(1.15);
+}
+/* ヘッダー(上部の固定バー)もすりガラスに */
+html[data-xdt-bgpanel="1"] [data-testid="primaryColumn"] > div > div:first-child[style*="backdrop"],
+html[data-xdt-bgpanel="1"] [data-testid="primaryColumn"] [data-testid="TopNavBar"] { background-color: color-mix(in srgb, var(--xdt-tint) calc(var(--xdt-bgop) * 100%), transparent) !important; }
+/* 硬い境界線をやわらげて壁紙になじませる */
+html[data-xdt-bgpanel="1"] :is([data-testid="primaryColumn"], [data-testid="sidebarColumn"]) { border-color: color-mix(in srgb, var(--xdt-panelbase) 28%, transparent) !important; }
+/* 文字色: 本文・名前(太字含む)・数値・プロフィール文・通知文。リンク・ボタン・アイコン・認証バッジは除外 */
+html[data-xdt-txtcolor="1"] :is([data-testid="primaryColumn"], [data-testid="sidebarColumn"]) :is([data-testid="tweetText"], [data-testid="tweetText"] span, [data-testid="UserName"] span, [data-testid="User-Name"] span, [data-testid="UserDescription"], [data-testid="UserDescription"] span, [data-testid="UserCell"] span, [data-testid="cellInnerDiv"] [dir] > span, [data-testid="app-text-transition-container"] span) { color: var(--xdt-txt) !important; }
+html[data-xdt-txtcolor="1"] :is([data-testid="primaryColumn"], [data-testid="sidebarColumn"]) :is(a span, [role="button"] span, [data-testid="icon-verified"], svg) { color: unset; }
+/* 中央列の幅は processWide(JS)が直接スタイルを当てる。横スクロールだけ抑える */
+html[data-xdt-wide="1"] body { overflow-x: hidden; }
+
+/* 左サイドメニューの項目非表示は .xdt-gone(display:none)で行う(並べ替え機能は廃止) */
+
+/* ===== 興味なしチップ ===== */
+.xdt-chip.xdt-busy { opacity: .5; pointer-events: none; }
+
+/* ===== ER一覧・フォロワー増減のポップ内リスト ===== */
+.xdt-erl { display: flex; flex-direction: column; max-height: 260px; overflow-y: auto; margin: 4px 0; }
+.xdt-erl a { display: block; padding: 3px 0; font-size: 11px; color: inherit; text-decoration: none; border-bottom: 1px solid rgba(128,128,128,.15); }
+.xdt-erl a:hover { background: rgba(128,128,128,.12); }
+.xdt-erl a b { color: #1d9bf0; }
+.xdt-erl a span { opacity: .7; }
+.xdt-csvbtn { margin-top: 6px; padding: 5px 10px; border: 0; border-radius: 8px; background: #1d9bf0; color: #fff; font: inherit; font-size: 12px; cursor: pointer; }
+
+/* ===== 定型文/下書きポップの追加・編集・削除 ===== */
+.xdt-snl .xdt-snrow { display: flex; align-items: center; gap: 4px; }
+.xdt-snl .xdt-snrow .xdt-snb { flex: 1; }
+.xdt-snl .xdt-snx { flex: none; width: 22px; height: 24px; padding: 0; border: 0; border-radius: 6px; background: transparent; color: inherit; opacity: .5; font-size: 13px; cursor: pointer; }
+.xdt-snl .xdt-snx:hover { opacity: 1; background: rgba(244,33,46,.2); }
+.xdt-snadd { display: flex; gap: 4px; margin-top: 4px; padding-top: 4px; border-top: 1px solid var(--xdt-line, rgba(128,128,128,.4)); }
+.xdt-snadd input { flex: 1; min-width: 0; padding: 5px 8px; border: 1px solid var(--xdt-line, rgba(128,128,128,.4)); border-radius: 8px; background: var(--xdt-bg); color: inherit; font: inherit; font-size: 13px; }
+.xdt-snadd button { flex: none; padding: 0 10px; border: 0; border-radius: 8px; background: #1d9bf0; color: #fff; font: inherit; font-size: 13px; cursor: pointer; }
+.xdt-sntab { display: flex; gap: 4px; margin-bottom: 4px; }
+.xdt-sntab button { flex: 1; padding: 4px; border: 1px solid var(--xdt-line, rgba(128,128,128,.4)); border-radius: 8px; background: transparent; color: inherit; font: inherit; font-size: 12px; cursor: pointer; }
+.xdt-sntab button.on { background: #1d9bf0; border-color: #1d9bf0; color: #fff; }
+
+/* ===== 画像の「画像を編集」(Grok)ボタンを隠す ===== */
+html[data-xdt-imgedit="1"] [data-testid="tweetPhoto"] :is(a[href*="grok" i], [aria-label*="Grok" i], [aria-label*="画像を編集"], [aria-label*="画像編集"], [aria-label*="編集" i]),
+html[data-xdt-imgedit="1"] [aria-modal="true"] :is(a[href*="grok" i], [aria-label*="画像を編集"], [aria-label*="Grok" i]),
+html[data-xdt-imgedit="1"] [data-testid*="grokImageEdit" i],
+html[data-xdt-imgedit="1"] [data-testid*="imageEdit" i] { display: none !important; }
+
+/* ===== 鍵垢のポストをぼかす(カーソルで解除) ===== */
+/* ポストを丸ごと(アイコン・名前・ID・時間・本文・メディア・リプライ/リポスト/いいね/インプレ)ぼかす。
+   article直下の子をぼかすことで、余白を巻き込まずにポスト全体を覆う。 */
+.xdt-pblur > * { filter: blur(var(--xdt-blurpx, 6px)); }
+.xdt-pblur:hover > * { filter: none; }
+
+/* ===== 年齢(自分の画面にだけ表示) ===== */
+.xdt-age { display: inline-block; margin-left: 6px; padding: 0 6px; border-radius: 4px; background: rgba(128,128,128,.18); font-size: 12px; font-weight: 700; vertical-align: middle; white-space: nowrap; }
+
+/* ===== 作成日時・編集履歴マーカー / 開設日 ===== */
+.xdt-edit { margin-left: 6px; padding: 0 5px; border-radius: 4px; background: rgba(128,128,128,.18); color: inherit; font-size: 12px; white-space: nowrap; vertical-align: baseline; }
+.xdt-open { opacity: .75; }
+
+/* ===== Twitterテーマにする(twitterMode) — ロゴ/バッジ/文言の差し替え + 旧Twitter風テーマ ===== */
+html[data-xdt-twitter="1"] { --xdt-tw-blue: #1DA1F2; --xdt-tw-blue-hover: #1A91DA; }
+/* 当時のフォント(Helvetica Neue / Segoe UI 系) */
+html[data-xdt-twitter="1"] body,
+html[data-xdt-twitter="1"] [data-testid="primaryColumn"],
+html[data-xdt-twitter="1"] [data-testid="sidebarColumn"] {
+  font-family: "Helvetica Neue", "Segoe UI", Arial, "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif !important;
+}
+/* 主要ボタン(ツイートする/フォロー)を旧Twitterの青い角丸ピル型に */
+html[data-xdt-twitter="1"] [data-testid="SideNav_NewTweet_Button"],
+html[data-xdt-twitter="1"] [data-testid="SideNav_NewTweet_Button_Mobile"],
+html[data-xdt-twitter="1"] [data-testid="tweetButton"],
+html[data-xdt-twitter="1"] [data-testid="tweetButtonInline"],
+html[data-xdt-twitter="1"] [data-testid$="-follow"] {
+  background-color: var(--xdt-tw-blue) !important;
+  border-color: var(--xdt-tw-blue) !important;
+  border-radius: 9999px !important;
+}
+html[data-xdt-twitter="1"] [data-testid="SideNav_NewTweet_Button"]:hover,
+html[data-xdt-twitter="1"] [data-testid="tweetButton"]:hover,
+html[data-xdt-twitter="1"] [data-testid="tweetButtonInline"]:hover,
+html[data-xdt-twitter="1"] [data-testid$="-follow"]:hover {
+  background-color: var(--xdt-tw-blue-hover) !important;
+}
+/* ボタン内文字色を白に固定 */
+html[data-xdt-twitter="1"] [data-testid="SideNav_NewTweet_Button"] span,
+html[data-xdt-twitter="1"] [data-testid="tweetButton"] span,
+html[data-xdt-twitter="1"] [data-testid="tweetButtonInline"] span,
+html[data-xdt-twitter="1"] [data-testid$="-follow"] span { color: #fff !important; }
+/* リンク・メンション・ハッシュタグなどのテキストリンクをTwitterブルーに */
+html[data-xdt-twitter="1"] a[role="link"][style*="rgb(29, 155, 240)"],
+html[data-xdt-twitter="1"] [data-testid="tweetText"] a { color: var(--xdt-tw-blue) !important; }
+/* 認証バッジのアクセント(SVGはJSで差し替え) */
+html[data-xdt-twitter="1"] [data-testid="icon-verified"] { color: var(--xdt-tw-blue) !important; fill: var(--xdt-tw-blue) !important; }
+/* アバターを旧Twitter風の円形に(四角アイコン設定が有効なときは除く) */
+html[data-xdt-twitter="1"]:not([data-xdt-sqavatar]) [data-testid^="UserAvatar"] div[style*="border-radius"] { border-radius: 9999px !important; }
+/* ロード画面(中央ロゴ): 念のため #placeholder 内の塗りをTwitterブルーに */
+html[data-xdt-twitter="1"] #placeholder svg path { fill: #1DA1F2 !important; }
+
+/* 左サイドメニューに移動した追加項目(Under the Hood 等) */
+.xdt-navx {
+  display: flex; align-items: center; gap: 18px;
+  padding: 10px 12px; margin: 2px 0; border-radius: 9999px;
+  color: inherit; text-decoration: none; cursor: pointer; width: fit-content;
+  font-size: 20px; line-height: 24px;
+}
+.xdt-navx:hover { background: rgba(127, 127, 127, .1); }
+.xdt-navx .xdt-navx-i { font-size: 22px; width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; }
+.xdt-navx .xdt-navx-i svg { width: 24px; height: 24px; fill: currentColor; }
+@media (max-width: 1300px) { .xdt-navx .xdt-navx-t { display: none; } }
