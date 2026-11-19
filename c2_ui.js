@@ -412,12 +412,13 @@
       const unit = a.closest('[data-testid="cellInnerDiv"]') || a;
       unit.classList.toggle('xdt-hide', muteMatch(txt, info.author));
     }
-    // 文字のみのポストを非表示(画像・動画のみ)。ポスト詳細(/status/)ではそのポストと返信は隠さない。
+    // 文字のみのポストを非表示(画像・動画のみ)。ポスト詳細(/status/)と通知(/notifications)では隠さない。
     {
       const unit2 = a.closest('[data-testid="cellInnerDiv"]') || a;
       let fhide = false;
       const onStatus = /\/status\/\d+/.test(location.pathname);
-      if (S.mediaOnly && !onStatus) {
+      const onNotif = /^\/notifications(\/|$)/.test(location.pathname);
+      if (S.mediaOnly && !onStatus && !onNotif) {
         const media = Array.from(a.querySelectorAll('[data-testid="tweetPhoto"],[data-testid="videoPlayer"],[data-testid="videoComponent"]')).filter((p) => !p.closest('[data-testid="quoteTweet"]'));
         if (!media.length) fhide = true;
       }
@@ -1732,28 +1733,30 @@
         }
       }
     }
-    // プロフィールのメディアを開いた初回は「画像」(filter=photo)にする
+    // プロフィールのメディアを開いた「初回だけ」画像(filter=photo)にする。
+    // 以降は手動でのフィルタ変更(動画/すべて等)を尊重し、二度と自動切り替えしない。
+    // メディアから離れて再度開いたときは、その訪問の初回として再適用する。
     {
       const onMedia = /\/media\/?$/.test(location.pathname);
+      const base = location.pathname.replace(/\/+$/, ''); // クエリは含めない(手動変更で再発火しないように)
       if (!onMedia) { mfDone = null; mfTries = 0; }
-      else if (S.mediaImageFirst) {
-        const already = /[?&]filter=(photo|image|images|media)\b/i.test(location.search);
-        const key = location.pathname + location.search;
-        if (already) { mfDone = key; mfTries = 0; }
-        else if (mfDone !== key && mfTries < 12 && Date.now() - mfT > 600) {
-          mfT = Date.now(); mfTries++;
-          const FILTER_LABEL = /^(すべて(のメディア)?|動画|画像|写真|メディア|GIFs?|Videos?|Photos?|Images?|All|Media)$/i;
-          // 1) フィルタのドロップダウン(現在値=すべて/動画 等)を探してメニューから「画像」を選ぶ
-          const trig = Array.from(document.querySelectorAll('[data-testid="primaryColumn"] [role="button"],[data-testid="primaryColumn"] button,[data-testid="primaryColumn"] [role="tab"]'))
-            .find((b) => !b.closest('article') && FILTER_LABEL.test((b.textContent || '').trim()) && (b.getAttribute('aria-haspopup') === 'menu' || b.querySelector('svg')));
-          if (trig && IMG_LABEL.test((trig.textContent || '').trim())) { mfDone = key; }
-          else if (trig) { mfDone = key; menuPick(trig, IMG_LABEL).then((ok) => { if (!ok) mfDone = null; }); }
-          else {
-            // 2) フォールバック: 文言がちょうど「画像/写真」の要素(タブ/ボタン/リンク/メニュー項目)を直接クリック
-            const direct = Array.from(document.querySelectorAll('[data-testid="primaryColumn"] [role="tab"],[data-testid="primaryColumn"] [role="menuitem"],[data-testid="primaryColumn"] [role="option"],[data-testid="primaryColumn"] a[role="link"],[data-testid="primaryColumn"] [role="button"]'))
-              .find((b) => !b.closest('article') && IMG_LABEL.test((b.textContent || '').trim()));
-            if (direct) { mfDone = key; realClick(direct); }
-          }
+      else if (!S.mediaImageFirst) { /* 無効 */ }
+      else if (mfDone === base) { /* この訪問では適用済み → 手動操作を尊重して何もしない */ }
+      else if (/[?&]filter=(photo|image|images|media)\b/i.test(location.search)) {
+        mfDone = base; mfTries = 0; // 既に画像(直リンク等) → 済みとして記録
+      } else if (mfTries < 12 && Date.now() - mfT > 600) {
+        mfT = Date.now(); mfTries++;
+        const FILTER_LABEL = /^(すべて(のメディア)?|動画|画像|写真|メディア|GIFs?|Videos?|Photos?|Images?|All|Media)$/i;
+        // 1) フィルタのドロップダウン(現在値=すべて/動画 等)を探してメニューから「画像」を選ぶ
+        const trig = Array.from(document.querySelectorAll('[data-testid="primaryColumn"] [role="button"],[data-testid="primaryColumn"] button,[data-testid="primaryColumn"] [role="tab"]'))
+          .find((b) => !b.closest('article') && FILTER_LABEL.test((b.textContent || '').trim()) && (b.getAttribute('aria-haspopup') === 'menu' || b.querySelector('svg')));
+        if (trig && IMG_LABEL.test((trig.textContent || '').trim())) { mfDone = base; }
+        else if (trig) { mfDone = base; menuPick(trig, IMG_LABEL).then((ok) => { if (!ok) mfDone = null; }); }
+        else {
+          // 2) フォールバック: 文言がちょうど「画像/写真」の要素(タブ/ボタン/リンク/メニュー項目)を直接クリック
+          const direct = Array.from(document.querySelectorAll('[data-testid="primaryColumn"] [role="tab"],[data-testid="primaryColumn"] [role="menuitem"],[data-testid="primaryColumn"] [role="option"],[data-testid="primaryColumn"] a[role="link"],[data-testid="primaryColumn"] [role="button"]'))
+            .find((b) => !b.closest('article') && IMG_LABEL.test((b.textContent || '').trim()));
+          if (direct) { mfDone = base; realClick(direct); }
         }
       }
     }
