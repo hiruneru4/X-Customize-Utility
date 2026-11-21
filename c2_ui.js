@@ -470,23 +470,21 @@
       for (const r of rows) { const lo = (r.textContent || '').match(/@([A-Za-z0-9_]{1,15})\s*(?:からログアウト|をログアウト)|Log out\s*@([A-Za-z0-9_]{1,15})/i); if (lo) { blurMe = lo[1] || lo[2]; break; } }
     }
     const me = blurMe && blurMe.toLowerCase();
-    // 他人のプロフィール(ホバーカード等)の目印: フォロー系ボタン・フォロー数のリンク
-    const PROFILE = '[data-testid$="-follow"],[data-testid$="-unfollow"],[data-testid$="-unblock"],[data-testid="editProfileButton"],a[href$="/following"],a[href$="/followers"],a[href$="/verified_followers"]';
-    const hasProfileSigns = (r) => { let e = r; for (let i = 0; i < 8 && e && e.id !== 'layers'; i++, e = e.parentElement) if (e.querySelector(PROFILE)) return true; return false; };
-    // 「相手のユーザーに対する操作」の行(@xx さんをフォロー/ブロック/ミュート 等)
-    const VERB = /@[A-Za-z0-9_]{1,15}\s*(?:さん)?を|@[A-Za-z0-9_]{1,15}\s*(?:さん)?の|(?:Follow|Unfollow|Block|Unblock|Mute|Unmute|Report)\s+@/i;
+    // アカウント切り替えメニュー(「ログアウト」「既存のアカウントを追加」がある層)だけを対象にする。
+    // フォローリクエスト一覧・返信先の「〜さんに返信」など、他の層には一切ぼかしをかけない。
     const LOGOUT = /ログアウト|Log out|既存のアカウントを追加|Add an existing account/i;
     let n = 0, ex = 0;
     rows.forEach((r) => {
-      const L = r.closest('#layers > *') || r, h = lastHandle(r.textContent);
-      // アカウント切り替え(ログアウト等がある層)は常に対象。それ以外は、プロフィールの目印やフォロー等の操作行を除外
-      const excluded = !LOGOUT.test(L.textContent || '') && (hasProfileSigns(r) || VERB.test(r.textContent || ''));
-      const on = !!(S.blurInactive && me && h && !excluded && h.toLowerCase() !== me);
-      if (excluded) ex++;
+      const L = r.closest('#layers > *') || r;
+      const inSwitcher = LOGOUT.test(L.textContent || '');
+      const h = lastHandle(r.textContent);
+      // 切替メニュー内で、いま使っている自分のアカウント以外（＝使っていないログインアカウント）だけぼかす
+      const on = !!(S.blurInactive && inSwitcher && me && h && h.toLowerCase() !== me);
+      if (!inSwitcher) ex++;
       if (on) n++;
       if (r.classList.contains('xdt-blur') !== on) r.classList.toggle('xdt-blur', on);
     });
-    stats.blurInfo = `行 ${rows.length} / ぼかし ${n} / 除外 ${ex} / 自分 ${blurMe || '不明'}`;
+    stats.blurInfo = `行 ${rows.length} / ぼかし ${n} / 切替外 ${ex} / 自分 ${blurMe || '不明'}`;
   }
   // Xがメニューの行を書き換えてクラスが外れたときも、待たずにその場で付け直す
   let sqLast = 0;
@@ -1329,7 +1327,10 @@
         if (delItem) {
           const locked = XDT.isDelLocked && XDT.isDelLocked(id);
           const delRow = rowUnit(delItem);
+          // ロック中は「削除」ボタンを非表示にする(クラス＋インラインの二重でXの再描画にも耐える)
           delRow.classList.toggle('xdt-gone', !!locked);
+          delRow.style.display = locked ? 'none' : '';
+          delItem.classList.toggle('xdt-gone', !!locked);
           let el = menu.querySelector('.xdt-mi[data-xdt-act="dellock"]');
           if (!el) { el = mkMenuItem(unit, locked ? '🔒' : '🔓', locked ? '削除ロックを解除' : '削除しないようにロック', 'dellock', { id, author, text, url }); delRow.after(el); }
           else setLockLabel(el, locked); // 状態に合わせてラベルを最新化
@@ -2007,26 +2008,6 @@
   }
 
   /* ============================ クリック ============================ */
-  // 削除ロック: ロック中ポストの「削除」クリックを確実に無効化(キャプチャ段階で止める)
-  function delTarget(el) {
-    const mi = el && el.closest && el.closest('[role="menuitem"],[data-testid="confirmationSheetConfirm"]');
-    if (!mi) return null;
-    const t = (mi.textContent || '').trim();
-    if (/^(削除|ポストを削除|Delete|Delete post)$/i.test(t)) return 'menu';
-    if (mi.getAttribute && mi.getAttribute('data-testid') === 'confirmationSheetConfirm' && /^(削除|Delete)$/i.test(t)) return 'confirm';
-    return null;
-  }
-  document.addEventListener('click', (e) => {
-    if (!S.delProtect) return;
-    const el = e.target;
-    if (!(el instanceof Element)) return;
-    if (!delTarget(el)) return;
-    const id = lastArt && lastArt.id;
-    if (id && XDT.isDelLocked && XDT.isDelLocked(id)) {
-      e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-      closeMenu();
-    }
-  }, true);
   document.addEventListener('click', async (e) => {
     const t = e.target;
     if (!(t instanceof Element)) return;
@@ -2462,6 +2443,7 @@
     try {
       for (const n of touched) if (!n.isConnected) touched.delete(n);
       run(processDataset);
+      run(processStyleVars);
       run(checkHov);
       run(processBirthday);
       run(processFollowLinks);

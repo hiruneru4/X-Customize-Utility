@@ -81,7 +81,6 @@
     <div class="sub">ボタンの非表示</div>
     <label><input type="checkbox" data-k="hideImgEdit"> 画像の「画像を編集」(Grok)ボタン</label>
     <label><input type="checkbox" data-k="hideDelete"> ポストの「削除」(…メニュー内)</label>
-    <label><input type="checkbox" data-k="delProtect"> 「削除しないようにロック」を…メニューに追加(削除の下。ロック中は削除を非表示)</label>
     <div class="sub">共有メニュー</div>
     <label><input type="checkbox" data-k="shareCheck"> 共有メニューに「ポストの検索チェック」</label>
     <div class="sub">添付メディアのセンシティブ推定(投稿画面)</div>
@@ -174,7 +173,8 @@
   </div></details>
 
   <details><summary>削除ロック</summary><div class="grp">
-    <p class="uthnote">「削除しないようにロック」したポストの一覧です。ロック中はそのポストの…メニューの「削除」が無効化されます(ポストページのURLからも手動で追加できます)。この機能を使うには「ポスト」の「削除しないようにロック」をオンにしてください。</p>
+    <label><input type="checkbox" data-k="delProtect"> 「削除しないようにロック」を…メニューに追加(削除の下)</label>
+    <p class="uthnote">上をオンにすると、ポストの…メニューの「削除」の下に「削除しないようにロック」が追加されます。ロックしたポストは…メニューの「削除」が非表示になります。下は現在ロック中のポスト一覧です(ポストページのURL／IDからも手動で追加できます)。</p>
     <div class="xdt-snadd" style="margin:4px 0"><input type="text" id="lockNew" placeholder="ポストのURL(例: https://x.com/user/status/123…)"><button id="lockAdd" class="btn" type="button">ロック追加</button></div>
     <div id="lockList" class="favlist"></div>
   </div></details>

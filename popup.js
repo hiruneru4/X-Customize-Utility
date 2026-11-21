@@ -630,6 +630,12 @@ function aggDaily(pts) {
   pts.slice().sort((a, b) => a.t - b.t).forEach((p) => { const d = new Date(p.t); const key = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`; const mid = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12).getTime(); by.set(key, { t: mid, v: p.v }); });
   return Array.from(by.values()).sort((a, b) => a.t - b.t);
 }
+// 時間ごとに集計(各時間の最後の値を代表にする)
+function aggHourly(pts) {
+  const by = new Map();
+  pts.slice().sort((a, b) => a.t - b.t).forEach((p) => { const d = new Date(p.t); const key = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}-${d.getHours()}`; const mid = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), 30).getTime(); by.set(key, { t: mid, v: p.v }); });
+  return Array.from(by.values()).sort((a, b) => a.t - b.t);
+}
 function drawChart(pts, mode, unit, color) {
   const box = $('#statChart');
   if (!box) return;
@@ -680,7 +686,8 @@ function renderStats() {
       else pts = (fol[name] || []).map((p) => ({ t: p.t, v: s.chartMetric === 'fo' ? p.fo : p.fr })).filter((p) => p.v != null);
       const cut = Date.now() - (PERIOD_DAYS[s.chartPeriod] || 28) * 864e5;
       pts = pts.filter((p) => p.t >= cut);
-      if (s.chartAgg === 'day' && s.chartMetric !== 'sens') pts = aggDaily(pts); // センシ件数はもともと日別
+      // センシ件数はもともと日別。それ以外は「時間ごと」「日付ごと」で集計する
+      if (s.chartMetric !== 'sens') pts = (s.chartAgg === 'day') ? aggDaily(pts) : aggHourly(pts);
       drawChart(pts, s.chartMode, unit, '#1d9bf0');
     });
   });
