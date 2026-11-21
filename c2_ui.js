@@ -1712,6 +1712,18 @@
     autoBlkT = Date.now();
     realClick(cf);
   }
+  // 削除ロック中は、開いている…メニューの「削除」を確実に非表示にする(毎回実行・lock項目の有無に関わらず)
+  function processDelLockHide() {
+    if (!S.delProtect) return;
+    const id = lastArt && lastArt.id;
+    const locked = !!(id && XDT.isDelLocked && XDT.isDelLocked(id));
+    document.querySelectorAll('[role="menu"],[data-testid="Dropdown"]').forEach((menu) => {
+      const del = Array.from(menu.querySelectorAll('[role="menuitem"]')).find((x) => !x.closest('.xdt-mi') && /^(削除|ポストを削除|Delete|Delete post)$/i.test((x.textContent || '').trim()));
+      if (!del) return;
+      const row = rowUnit(del);
+      [del, row].forEach((n) => { if (!n) return; n.classList.toggle('xdt-gone', locked); if (locked) n.style.setProperty('display', 'none', 'important'); else n.style.removeProperty('display'); });
+    });
+  }
   let fsDone = false, fsTries = 0, fsT = 0, mfDone = null, mfTries = 0, mfT = 0;
   function processTasks() {
     // フォロー中フィードを強制
@@ -2067,9 +2079,7 @@
         if (XDT.toggleDelLock) XDT.toggleDelLock(d.xdtId, { author: d.xdtAuthor || '', text: d.xdtText || '', url: d.xdtUrl || '' });
         const locked = XDT.isDelLocked && XDT.isDelLocked(d.xdtId);
         setLockLabel(mi, locked);
-        const menu = mi.closest('[role="menu"],[data-testid="Dropdown"]');
-        const delItem = menu && Array.from(menu.querySelectorAll('[role="menuitem"]')).find((x) => /^(削除|ポストを削除|Delete|Delete post)$/i.test((x.textContent || '').trim()));
-        if (delItem) rowUnit(delItem).classList.toggle('xdt-gone', !!locked);
+        processDelLockHide(); // 開いたまま即時で「削除」を非表示/再表示
         XDT.schedule && XDT.schedule();
         return;
       }
@@ -2474,7 +2484,7 @@
       // アカウント切り替えのぼかしは、重い処理より先に実行
       run(watchLayers);
       run(processBlurInactive);
-      [processNotifPrivacy, processProfile, processMoreMenu, processLeftExtras, processHideFooter, unblurTiles, unblurLayers, processSnippets, processAgeLocal, processBirthdaySelf, processHqMedia, processExtraHides, processGrokButtons, processTwitter, processAutoBlock, processFavStar, processStar, processSquareAvatars, processLocks, processRelEverywhere, processTimes, processHighlight, processMenus, processCompose, processTasks].forEach((f) => run(f));
+      [processNotifPrivacy, processProfile, processMoreMenu, processLeftExtras, processHideFooter, unblurTiles, unblurLayers, processSnippets, processAgeLocal, processBirthdaySelf, processHqMedia, processExtraHides, processGrokButtons, processTwitter, processAutoBlock, processDelLockHide, processFavStar, processStar, processSquareAvatars, processLocks, processRelEverywhere, processTimes, processHighlight, processMenus, processCompose, processTasks].forEach((f) => run(f));
     } finally { observe(); }
   }
 

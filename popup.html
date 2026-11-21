@@ -42,9 +42,9 @@
     <label><input type="checkbox" data-k="erList"> 📈 ER一覧・CSV書き出し</label>
     <label><input type="checkbox" data-k="followerTrack"> 📉 フォロワー/フォローの増減を記録(この端末内のみ)</label>
     <label><input type="checkbox" data-k="fromButton"> 🔍 From検索</label>
-    <label><input type="checkbox" data-k="mediaMergeTabs"> 🖼 メディア(画像と動画を一緒に一覧)</label>
+    <label><input type="checkbox" data-k="mediaMergeTabs"> 🖼 メディア(画像と動画を一覧表示)</label>
     <label><input type="checkbox" data-k="mediaImageFirst"> メディアを開いた初回を「画像」にする</label>
-    <label><input type="checkbox" data-k="oneClickBlock"> ワンクリックでブロック(ブロックの確認ダイアログを自動でOK)</label>
+    <label><input type="checkbox" data-k="oneClickBlock"> ワンクリックで即ブロック</label>
     <label><input type="checkbox" data-k="copyName"> ユーザー名コピー</label>
     <label><input type="checkbox" data-k="copyScreen"> スクリーンネームコピー</label>
     <label><input type="checkbox" data-k="relIndicator"> プロフィールの関係表示(相互・片思い等)</label>
@@ -199,12 +199,12 @@
     <div id="sensList" class="snl"></div>
     <button id="sensReset" class="btn" type="button">記録をすべて消す</button>
     <p class="uthnote">「記録する期間」で選んだ日数以内に投稿されたポストでセンシティブを検知した場合だけ記録します。各記録に投稿者の@ID・投稿日時・検知からの残り時間(1日)・解除済みを表示し、アカウント(@ID)ごとに分けて表示します。</p>
-    <div class="sub">シャドウバンの記録(解除まで7日)</div>
+    <div class="sub">シャドウバンの記録(7日・14日・1か月での解除)</div>
     <div id="shadowBox" class="diag">記録なし</div>
     <div class="xdt-snadd" style="margin:6px 0"><input type="text" id="shadowNew" placeholder="@スクリーンネーム を入力して手動追加"><button id="shadowAddBtn" class="btn" type="button">追加</button></div>
     <div id="shadowList" class="snl"></div>
     <button id="shadowReset" class="btn" type="button">シャドウバンの記録をすべて消す</button>
-    <p class="uthnote">プロフィールやポストで「シャドウバン 疑い」を検知したアカウントを、スクリーンネーム付きで記録します。各記録に検知日時と解除までの残り時間(7日)を表示します。手動での追加・削除もできます。</p>
+    <p class="uthnote">プロフィールやポストで「シャドウバン 疑い」を検知したアカウントを、スクリーンネーム付きで記録します。各記録に検知日時と、7日・14日・1か月での解除までの残り時間を表示します(過ぎた期間は非表示)。1か月以上検知が続く場合は「1か月以上シャドウバンされています」、検知されなくなった場合は「解除済み」と表示します。手動での追加・削除もできます。</p>
     <details class="inner"><summary>センシティブ判定の解説</summary><div class="grp help">
     <p><b>センシティブ率(「直近」の範囲)</b><br>最新5件(件数。リポストも含み、リポストは元ポストの状態)で数えます。公開コード(safety-label-user-agg)では、ポストに新しく NSFW_HIGH_PRECISION が付いたとき、最新5ポストのうち60日以内の同ラベルが3件以上でアカウントにラベル(7日)。</p>
     <p class="uthnote">公開コード(xai-org/x-algorithm)を第三者が読み解いた内容に基づく説明で、本番と同じとは限りません。時刻は拡張機能が検知した時刻で、Xがラベルを付けた正確な時刻ではありません。</p>

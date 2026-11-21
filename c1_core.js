@@ -222,18 +222,17 @@
   let sensLog = [], ownSeen = {}, sensLoaded = false, ownDirty = false, ownLast = '';
   chrome.storage.local.get(['sensLog', 'ownSeen'], (v) => { sensLog = (v && v.sensLog) || []; ownSeen = (v && v.ownSeen) || {}; sensLoaded = true; });
 
-  // シャドウバンの記録: shadowLog = [{name(スクリーンネーム小文字), t, kind:'became'|'cleared'|'manual'}]。解除まで7日。
-  const SHADOW_WIN = 7 * 864e5;
+  // シャドウバンの記録: shadowLog = [{name(スクリーンネーム小文字), t, kind:'became'|'cleared'|'manual'}]。
+  // 検知が続く間は最初の検知時刻を保持し(重複記録しない)、検知されなくなったら 'cleared' を記録する。
   let shadowLog = [], shadowLoaded = false, shadowDirty = false;
   chrome.storage.local.get('shadowLog', (v) => { shadowLog = (v && Array.isArray(v.shadowLog)) ? v.shadowLog : []; shadowLoaded = true; });
-  // そのアカウントに「有効な(7日以内・未解除の)シャドウバン記録」があるか
+  // そのアカウントに「未解除のシャドウバン記録」があるか(時間では自然解除しない=実際に検知されなくなるまで保持)
   const shadowActive = (k) => {
     const becs = shadowLog.filter((e) => e.name === k && (e.kind === 'became' || e.kind === 'manual'));
     if (!becs.length) return null;
     const last = becs.reduce((a, b) => (b.t > a.t ? b : a));
     const cleared = shadowLog.some((e) => e.name === k && e.kind === 'cleared' && e.t > last.t);
     if (cleared) return null;
-    if (Date.now() - last.t > SHADOW_WIN) return null; // 7日経過は自然解除とみなす
     return last;
   };
   // シャドウバン判定の結果を記録する。c2_ui の判定(shadowOverall)から呼ばれる。

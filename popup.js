@@ -564,9 +564,9 @@ if ($('#sensAddBtn')) $('#sensAddBtn').addEventListener('click', () => {
 renderSens();
 setInterval(renderSens, 1000);
 
-/* ---- シャドウバンの記録(解除まで7日) ---- */
+/* ---- シャドウバンの記録(7日・14日・1か月での解除を表示) ---- */
 function shadowActiveList(log) {
-  // name ごとに、未解除・7日以内の最新 became/manual を1件返す
+  // name ごとに、未解除の最新 became/manual を1件返す(解除は 'cleared' イベントで判定)
   const byName = {};
   (log || []).forEach((e) => { (byName[e.name] = byName[e.name] || []).push(e); });
   const out = [];
@@ -606,7 +606,17 @@ function renderShadow() {
         list.appendChild(row);
       });
     }
-    list.querySelectorAll('.sensrow').forEach((row) => { const left = row.querySelector('.sensleft'); if (!left) return; if (row.dataset.cleared) { left.textContent = '解除済み'; return; } const et = +row.dataset.t, r7 = et + D7 - now; left.textContent = `解除まで ${r7 > 0 ? dhms(r7) : '経過'}`; });
+    list.querySelectorAll('.sensrow').forEach((row) => {
+      const left = row.querySelector('.sensleft'); if (!left) return;
+      // 解除された(cleared)場合は、カウントダウンはすべて出さず「解除済み」のみ
+      if (row.dataset.cleared) { left.textContent = '解除済み'; return; }
+      const et = +row.dataset.t, elapsed = now - et;
+      // 7日・14日・1か月での解除をそれぞれ表示。過ぎた期間は非表示。
+      const THRESH = [[D7, '7日'], [2 * D7, '14日'], [30 * D1, '1か月']];
+      const remaining = THRESH.filter(([ms]) => elapsed < ms);
+      if (!remaining.length) { left.textContent = '1か月以上シャドウバンされています'; return; }
+      left.textContent = remaining.map(([ms, label]) => `${label}で解除まで あと${dhms(ms - elapsed)}`).join(' / ');
+    });
   });
 }
 if ($('#shadowAddBtn')) $('#shadowAddBtn').addEventListener('click', () => {
@@ -643,7 +653,7 @@ function drawChart(pts, mode, unit, color) {
   if (!pts || !pts.length) { box.innerHTML = '<div class="statempty">この期間の記録がありません</div>'; return; }
   const fv = (v) => (unit === '%' ? v.toFixed(2) + '%' : fmtNum(v));
   const last = pts[pts.length - 1], first = pts[0], delta = last.v - first.v;
-  const head = `<div class="stathead">最新: <b>${fv(last.v)}</b>　増減: <b>${delta >= 0 ? '+' : ''}${unit === '%' ? delta.toFixed(2) : fmtNum(delta)}</b>　点数: ${pts.length}</div>`;
+  const head = `<div class="stathead">最新: <b>${fv(last.v)}</b>　増減: <b>${delta >= 0 ? '+' : ''}${unit === '%' ? delta.toFixed(2) : fmtNum(delta)}</b>　記録: ${pts.length}</div>`;
   if (mode === 'num') {
     box.innerHTML = head + '<div class="statnums">' + pts.slice().reverse().map((p) => `<div class="statrow"><span>${new Date(p.t).toLocaleString('ja-JP', { year: '2-digit', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span><b>${fv(p.v)}</b></div>`).join('') + '</div>';
     return;
