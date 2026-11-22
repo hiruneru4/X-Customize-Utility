@@ -324,7 +324,9 @@
     const html = (r1.length ? `<div class="xdt-row">${r1.join('')}</div>` : '') + (r2.length ? `<div class="xdt-row">${r2.join('')}</div>` : '');
     if (!html) { if (box) box.remove(); return; }
     if (!box) { box = document.createElement('div'); box.className = 'xdt-tbadges'; group.parentElement.insertBefore(box, group); }
-    box.style.height = op ? '' : ((row1On ? 1 : 0) + (row2On ? 1 : 0)) * 24 + 'px';
+    // 実際に表示する行数ぶんの高さを常に明示指定する(高さ'' のままだとXのflexレイアウト内で
+    // 箱が潰れてチップが overflow:hidden で隠れ、「問題があっても表示されない/表示が崩れる」原因になる)
+    box.style.height = ((r1.length ? 1 : 0) + (r2.length ? 1 : 0)) * 24 + 'px';
     if (box.dataset.sig !== html) { box.dataset.sig = html; box.innerHTML = html; }
   }
 
